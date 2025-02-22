@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escape Room Avanzado: Salvar un avión</title>
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Escape Room Avanzado: Salvar un avión</h1>
+    <div id="game">
+      <p id="narrative">¡Piloto experto! Tu misión es salvar el avión resolviendo 30 retos de código en C++. Cada respuesta debe escribirse en una sola línea sin espacios y en minúsculas. ¡Investiga, piensa y codifica!</p>
+      <p id="progress">Pregunta 1 de 30</p>
+      <p id="question"></p>
+      <input type="text" id="answer" placeholder="Escribe tu respuesta aquí">
+      <button id="submit">Enviar respuesta</button>
+      <p id="feedback"></p>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { 
+        question: "Fase 1: Escribe un bucle for en C++ que recorra del 1 al 10 e imprima cada número en el monitor serial. (Sin espacios)", 
+        answer: "for(inti=1;i<=10;i++){serial.println(i);}" 
+      },
+      { 
+        question: "Fase 2: Declara una función en C++ llamada 'suma' que reciba dos enteros y retorne su suma. (Sin espacios)", 
+        answer: "intsuma(inta,intb){returna+b;}" 
+      },
+      { 
+        question: "Fase 3: Escribe un condicional if en C++ que verifique si una variable 'x' es mayor que 100 e imprima \"mayor\" en el monitor serial. (Sin espacios)", 
+        answer: "if(x>100){serial.println(\"mayor\");}" 
+      },
+      { 
+        question: "Fase 4: Declara un arreglo de 5 enteros llamado 'nums' e inicialízalo con 1,2,3,4,5. (Sin espacios)", 
+        answer: "intnums[5]={1,2,3,4,5};" 
+      },
+      { 
+        question: "Fase 5: Crea una función en C++ llamada 'encenderled' que no reciba parámetros y encienda un LED en el pin 13 usando digitalWrite. (Sin espacios)", 
+        answer: "voidencenderled(){digitalwrite(13,high);}" 
+      },
+      { 
+        question: "Fase 6: Crea una función en C++ llamada 'apagarled' que apague el LED en el pin 13 usando digitalWrite. (Sin espacios)", 
+        answer: "voidapagarled(){digitalwrite(13,low);}" 
+      },
+      { 
+        question: "Fase 7: Escribe el código en la función setup de Arduino para iniciar la comunicación serial a 9600 baudios. (Sin espacios)", 
+        answer: "voidsetup(){serial.begin(9600);}" 
+      },
+      { 
+        question: "Fase 8: Escribe un bucle while en C++ que, partiendo de una variable 'n', imprima sus valores decreciendo hasta 0. (Sin espacios)", 
+        answer: "while(n>=0){serial.println(n);n--;}" 
+      },
+      { 
+        question: "Fase 9: Declara una variable float llamada 'temperatura' y asígnale el valor 36.6. (Sin espacios)", 
+        answer: "floattemperatura=36.6;" 
+      },
+      { 
+        question: "Fase 10: Crea una función en C++ llamada 'comparar' que reciba dos enteros y retorne true si el primero es mayor que el segundo. (Sin espacios)", 
+        answer: "boolcomparar(inta,intb){return(a>b);}" 
+      },
+      { 
+        question: "Fase 11: Escribe un switch en C++ que evalúe la variable 'opcion' y, para los casos 1,2 y 3, imprima el número correspondiente; en default, imprima \"invalido\". (Sin espacios)", 
+        answer: "switch(opcion){case1:serial.println(\"1\");break;case2:serial.println(\"2\");break;case3:serial.println(\"3\");break;default:serial.println(\"invalido\");}" 
+      },
+      { 
+        question: "Fase 12: Declara una variable booleana llamada 'estado' y asígnale el valor true. (Sin espacios)", 
+        answer: "boolestado=true;" 
+      },
+      { 
+        question: "Fase 13: Crea una función en C++ llamada 'calculararea' que reciba un float 'radio' y retorne el área de un círculo (usa 3.14 como PI). (Sin espacios)", 
+        answer: "floatcalculararea(floatradio){return3.14*radio*radio;}" 
+      },
+      { 
+        question: "Fase 14: Escribe un bucle do-while en C++ que asigne a 'num' el valor retornado por la función leernumero() y se repita mientras num sea menor o igual a 0. (Sin espacios)", 
+        answer: "do{num=leernumero();}while(num<=0);" 
+      },
+      { 
+        question: "Fase 15: Escribe una función recursiva en C++ llamada 'factorial' que calcule el factorial de un entero 'n'. (Sin espacios)", 
+        answer: "intfactorial(intn){if(n<=1)return1;elsereturnn*factorial(n-1);}" 
+      },
+      { 
+        question: "Fase 16: Declara una estructura en C++ llamada 'sensor' con dos miembros: un entero 'id' y un float 'valor'. (Sin espacios)", 
+        answer: "structsensor{intid;floatvalor;};" 
+      },
+      { 
+        question: "Fase 17: Crea una función en C++ llamada 'leersensor' que reciba un objeto de tipo sensor y retorne su 'valor'. (Sin espacios)", 
+        answer: "floatleersensor(sensors){returns.valor;}" 
+      },
+      { 
+        question: "Fase 18: Declara un puntero a entero y asígnale la dirección de una variable 'a'. (Sin espacios)", 
+        answer: "int*a=&a;" 
+      },
+      { 
+        question: "Fase 19: Escribe una función en C++ llamada 'swap' que intercambie los valores de dos enteros usando punteros. (Sin espacios)", 
+        answer: "voidswap(int*a,int*b){inttemp=*a;*a=*b;*b=temp;}" 
+      },
+      { 
+        question: "Fase 20: Crea una función en C++ llamada 'invertircadena' que reciba una cadena (parámetro 's') y retorne la cadena invertida. (Sin espacios)", 
+        answer: "stringinvertircadena(s){stringinversa=\"\";for(inti=s.size()-1;i>=0;i--){inversa+=s[i];}returninversa;}" 
+      },
+      { 
+        question: "Fase 21: Escribe una función en C++ llamada 'contarvocales' que reciba una cadena (parámetro 's') y retorne el número de vocales (solo a,e,i,o,u). (Sin espacios)", 
+        answer: "intcontarvocales(s){intcontador=0;for(charc:s){if(c=='a'||c=='e'||c=='i'||c=='o'||c=='u')contador++;}returncontador;}" 
+      },
+      { 
+        question: "Fase 22: Crea una función en C++ llamada 'sumararray' que reciba un arreglo de enteros (parámetro 'intarr[]') y su tamaño 'n', y retorne la suma de sus elementos. (Sin espacios)", 
+        answer: "intsumararray(intarr[],intn){intsuma=0;for(inti=0;i<n;i++){suma+=intarr[i];}returnsuma;}" 
+      },
+      { 
+        question: "Fase 23: Escribe una función en C++ llamada 'buscarelemento' que reciba un arreglo de enteros ('intarr[]'), su tamaño 'n' y un valor 'valor', y retorne la posición del valor o -1 si no se encuentra. (Sin espacios)", 
+        answer: "intbuscarelemento(intarr[],intn,intvalor){for(inti=0;i<n;i++){if(intarr[i]==valor)returni;}return-1;}" 
+      },
+      { 
+        question: "Fase 24: Implementa en C++ la función 'ordenararray' que use el algoritmo de la burbuja para ordenar un arreglo de enteros ('intarr[]') de tamaño 'n'. (Sin espacios)", 
+        answer: "voidordenararray(intarr[],intn){for(inti=0;i<n-1;i++){for(intj=0;j<n-i-1;j++){if(intarr[j]>intarr[j+1]){inttemp=intarr[j];intarr[j]=intarr[j+1];intarr[j+1]=inttemp;}}}}" 
+      },
+      { 
+        question: "Fase 25: Escribe una función en C++ llamada 'espalindromo' que reciba una cadena (parámetro 's') y retorne true si es palíndromo, o false en caso contrario. (Sin espacios)", 
+        answer: "boolespalindromo(s){for(inti=0;i<s.size()/2;i++){if(s[i]!=s[s.size()-1-i])returnfalse;}returntrue;}" 
+      },
+      { 
+        question: "Fase 26: Crea una función en C++ llamada 'convertiramayusculas' que reciba una cadena (parámetro 's') y la convierta a mayúsculas (usando la conversión ASCII). (Sin espacios)", 
+        answer: "stringconvertiramayusculas(s){for(inti=0;i<s.size();i++){if(s[i]>='a'&&s[i]<='z')s[i]=s[i]-32;}returns;}" 
+      },
+      { 
+        question: "Fase 27: Escribe una función en C++ llamada 'contarpalabras' que reciba una cadena (parámetro 's') y retorne el número de palabras (asumiendo separación por espacios). (Sin espacios)", 
+        answer: "intcontarpalabras(s){intcontador=0;boolenpalabra=false;for(charc:s){if(c!=' '&&!enpalabra){contador++;enpalabra=true;}else if(c==' '){enpalabra=false;}}returncontador;}" 
+      },
+      { 
+        question: "Fase 28: Crea una función en C++ llamada 'fusionararrays' que reciba dos arreglos de enteros ('intarr1[]' y 'intarr2[]') con sus tamaños ('n1' y 'n2') y retorne un nuevo arreglo con la fusión de ambos. (Sin espacios)", 
+        answer: "int*fusionararrays(intarr1[],intn1,intarr2[],intn2){int*resultado=newint[n1+n2];for(inti=0;i<n1;i++){resultado[i]=intarr1[i];}for(intj=0;j<n2;j++){resultado[intn1+j]=intarr2[j];}returnresultado;}" 
+      },
+      { 
+        question: "Fase 29: Escribe una función en C++ llamada 'obtenermaximo' que reciba un arreglo de enteros ('intarr[]') y su tamaño 'n', y retorne el valor máximo. (Sin espacios)", 
+        answer: "intobtenermaximo(intarr[],intn){intmax=intarr[0];for(inti=1;i<n;i++){if(intarr[i]>max)max=intarr[i];}returnmax;}" 
+      },
+      { 
+        question: "Fase 30: Crea una función en C++ llamada 'invertirarray' que reciba un arreglo de enteros ('intarr[]') y su tamaño 'n', y retorne un nuevo arreglo con los elementos en orden inverso. (Sin espacios)", 
+        answer: "int*invertirarray(intarr[],intn){int*resultado=newint[n];for(inti=0;i<n;i++){resultado[i]=intarr[n-1-i];}returnresultado;}" 
+      }
+    ];
+
+    let currentQuestion = 0;
+
+    function showQuestion() {
+      if (currentQuestion < questions.length) {
+        document.getElementById("question").innerText = questions[currentQuestion].question;
+        document.getElementById("progress").innerText = "Pregunta " + (currentQuestion + 1) + " de " + questions.length;
+        document.getElementById("answer").value = "";
+        document.getElementById("feedback").innerText = "";
+      } else {
+        document.getElementById("game").innerHTML = "<h2>¡Felicidades, piloto experto! Has salvado el avión resolviendo todos los retos.</h2>";
+      }
+    }
+
+    document.getElementById("submit").addEventListener("click", function() {
+      const userAnswer = document.getElementById("answer").value.toLowerCase().trim();
+      const correctAnswer = questions[currentQuestion].answer.toLowerCase().trim();
+      if (userAnswer === correctAnswer) {
+        currentQuestion++;
+        showQuestion();
+      } else {
+        document.getElementById("feedback").innerText = "Respuesta incorrecta, intenta de nuevo.";
+      }
+    });
+
+    // Inicia el juego mostrando la primera pregunta
+    showQuestion();
+  </script>
+</body>
+</html>
